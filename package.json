@@ -1,0 +1,14 @@
+{
+  "name": "nestrr-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:api": "pnpm --filter @nestrr/api start:dev",
+    "dev:web": "pnpm --filter @nestrr/web dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
