@@ -1,22 +1,25 @@
-FROM node:24-alpine AS development-dependencies-env
-COPY . /app
+# apps/web/Dockerfile
+FROM node:24-alpine AS base
 WORKDIR /app
-RUN npm ci
+RUN corepack enable
 
-FROM node:24-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+FROM base AS deps
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY apps/web/package.json apps/web/package.json
+RUN pnpm install --frozen-lockfile --filter @nestrr/web...
 
-FROM node:24-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
+FROM deps AS build
+COPY . .
+RUN pnpm --filter @nestrr/web build
 
-FROM node:24-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
+FROM node:24-alpine AS runtime
 WORKDIR /app
-CMD ["npm", "run", "start"]
+RUN corepack enable
+ENV NODE_ENV=production
+ENV PORT=5173
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY apps/web/package.json apps/web/package.json
+RUN pnpm install --prod --frozen-lockfile --filter @nestrr/web...
+COPY --from=build /app/apps/web/build apps/web/build
+EXPOSE 5173
+CMD ["pnpm", "--filter", "@nestrr/web", "start"]

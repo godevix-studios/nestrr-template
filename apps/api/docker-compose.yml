@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.dev
+    env_file:
+      - apps/api/.env
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      # útil en Mac para file watching estable
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/api/node_modules

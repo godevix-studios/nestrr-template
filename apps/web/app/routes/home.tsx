@@ -12,8 +12,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const healthUrl =
-    import.meta.env.VITE_API_HEALTH_URL ?? "/api/health";
+  const healthUrl = "/api/health";
 
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<"idle" | "ok" | "error">("idle");
