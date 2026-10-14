@@ -6,6 +6,22 @@ Combina:
 - API backend con NestJS en apps/api
 - App web con React Router en apps/web
 
+## Personalizar el Nombre del Proyecto
+
+Se recomienda cambiar el nombre de `nestrr` por el nombre deseado al comenzar a usar esta plantilla. Puedes hacerlo con ayuda de una IA o con la busqueda y reemplazo de tu editor, revisando las coincidencias antes de aplicar cambios globales.
+
+Como minimo, actualiza el nombre visible del proyecto y el campo `name` del `package.json` raiz (`nestrr-template`). Si tambien quieres personalizar los nombres de los paquetes del monorepo, cambia `@nestrr/api` y `@nestrr/web` por el scope elegido en los `package.json` de cada app.
+
+Para un renombrado completo:
+
+1. Elige un nombre para mostrar y una variante corta, en minusculas y sin espacios, para paquetes y comandos. Por ejemplo, `mi-proyecto` y `@mi-proyecto/api`.
+2. Busca en todo el workspace `Nestrr`, `nestrr`, `nestrr-template` y `@nestrr`. Reemplaza cada coincidencia segun su uso; no todas representan el mismo nombre. Incluye los scripts de la raiz, los filtros de pnpm en Dockerfiles, los nombres de contenedor y los textos de la interfaz.
+3. Si cambiaste los nombres de los paquetes de las apps, actualiza tambien los filtros `--filter` en comandos y documentacion para que coincidan exactamente con sus nuevos campos `name`.
+4. Ejecuta `pnpm install` para actualizar el lockfile y luego prueba los comandos de desarrollo y build.
+5. Vuelve a buscar los nombres anteriores en el workspace para detectar referencias que hayan quedado pendientes.
+
+Como alternativa, puedes pedirle a una IA que renombre el proyecto en todo el workspace, indicando el nombre visible y el scope deseados. Pidele que conserve la estructura y dependencias, actualice todos los filtros de pnpm y Docker, y reporte los archivos modificados; despues revisa el diff y ejecuta las mismas comprobaciones.
+
 ## Arquitectura General
 
 Este repositorio usa una sola base de codigo para varias apps.

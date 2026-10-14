@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:api": "pnpm --filter @nestrr/api start:dev",
+    "docker:dev:api": "pnpm --filter @nestrr/api docker:dev",
     "dev:web": "pnpm --filter @nestrr/web dev"
   },
   "keywords": [],

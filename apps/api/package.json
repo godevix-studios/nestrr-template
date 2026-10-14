@@ -15,6 +15,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
     "start:prod": "node dist/main",
+    "docker:dev": "docker compose up -d --build --force-recreate",
     "lint": "oxlint src/ test/",
     "test": "vitest run",
     "test:watch": "vitest",

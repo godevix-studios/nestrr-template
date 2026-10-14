@@ -1,19 +1,11 @@
 FROM node:24-alpine
 
 WORKDIR /app
-RUN corepack enable
 
-# Dependencias del workspace + package de API
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-COPY apps/api/package.json apps/api/package.json
+COPY package*.json ./
+RUN npm install
 
-# Instala deps de API (incluye dev deps para watch/debug)
-RUN pnpm install --frozen-lockfile --filter @nestrr/api...
-
-# Fallback si no hay bind mount
+# Source directory is bind-mounted at runtime; this COPY is a fallback
 COPY . .
 
-WORKDIR /app/apps/api
-EXPOSE 3000 9229
-
-CMD ["pnpm", "start:debug"]
+CMD ["npm", "run", "start:debug"]
