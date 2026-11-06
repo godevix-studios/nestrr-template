@@ -8,6 +8,7 @@
     "docker:dev:api": "pnpm --filter @nestrr/api docker:dev",
     "dev:web": "pnpm --filter @nestrr/web dev"
   },
+  "engines": { "node": ">=24.22.2 <25" },
   "keywords": [],
   "author": "",
   "license": "ISC",

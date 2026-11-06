@@ -35,8 +35,42 @@ Estructura principal:
 
 ## Requisitos
 
-- Node.js
+- Node.js 24 LTS, version minima 24.22.2 (ver `.nvmrc`).
 - pnpm
+
+## Version de Node.js
+
+El template usa Node.js 24.22.2 para desarrollo local y para todas las etapas de Docker.
+El campo `engines.node` de la raiz admite parches posteriores de Node.js 24.
+
+Con nvm, desde la raiz:
+
+```bash
+nvm install
+nvm use
+node --version
+```
+
+Para actualizar a otro parche de Node.js 24, actualiza `.nvmrc`, el minimo en
+`engines.node` y las imagenes `FROM node:...` de los tres Dockerfiles.
+Reinstala las dependencias con `pnpm install --frozen-lockfile` y ejecuta los
+builds, pruebas y typecheck documentados abajo.
+
+Cambiar Node.js no requiere regenerar `pnpm-lock.yaml` si no cambian las dependencias.
+`@types/node` describe tipos de TypeScript; no actualiza el runtime.
+
+Para aplicar el cambio en produccion hay que reconstruir y recrear los contenedores:
+
+```bash
+docker compose build --pull --no-cache
+docker compose up -d --force-recreate
+docker compose exec api node --version
+docker compose exec web node --version
+```
+
+Si solo necesitas refrescar una imagen base sin cambiar la version fijada, tambien
+necesitas reconstruirla: reiniciar un contenedor conserva su imagen anterior.
+
 
 ## Instalacion de Dependencias
 

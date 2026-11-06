@@ -1,5 +1,5 @@
 # apps/api/Dockerfile
-FROM node:24-alpine AS base
+FROM node:24.22.2-alpine AS base
 WORKDIR /app
 RUN corepack enable
 
@@ -12,7 +12,7 @@ FROM deps AS build
 COPY . .
 RUN pnpm --filter @nestrr/api build:no-tests
 
-FROM node:24-alpine AS runtime
+FROM node:24.22.2-alpine AS runtime
 WORKDIR /app
 RUN corepack enable
 ENV NODE_ENV=production
